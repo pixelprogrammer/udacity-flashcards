@@ -1,21 +1,27 @@
 import { AsyncStorage } from 'react-native'
 import { DECK_STORAGE_KEY } from '../constants/app'
 
-export function getDecks() {
-	return AsyncStorage.getItem(DECK_STORAGE_KEY)
-		.then((results) => {
-			return results === null ? results : JSON.parse(results)
+export async function getDecks() {
+	return await AsyncStorage.getItem(DECK_STORAGE_KEY)
+		.then((result) => {
+			return result === null ? {} : JSON.parse(result)
 		})
+	
 }
 
 export function getDeck(id) {
+	const decks = getDecks()
 
+	if(decks.hasOwnProperty(id)) {
+		return decks[id]
+	}
+
+	return false
 }
 
-export function saveDeckTitle(title) {
-	let decks = getDecks()
+export async function addDeck(title) {
 
-	return AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
+	return await AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
 		[title]: {
 			title,
 			questions: []
