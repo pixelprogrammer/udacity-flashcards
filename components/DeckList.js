@@ -17,8 +17,12 @@ class DeckList extends Component {
 
 		const {dispatch} = this.props
 
+		console.log('getting decks');
 		getDecks()
-			.then(decks => dispatch(receiveDecksAction(decks)))
+			.then(decks => {
+				dispatch(receiveDecksAction(decks))
+				console.log(decks)
+			})
 	}
 
 	goToAddDeck = () => {
@@ -44,10 +48,14 @@ class DeckList extends Component {
 			<ScrollView style={{flex: 1}}>
 				{Object.keys(decks).map(deck => {
 					return (
-						<Deck 
-							deck={decks[deck]}
+						<TouchableOpacity
+							onPress={() => this.props.navigation.navigate('DeckDetails', {deck: decks[deck]})}
 							key={"deck-list-view" + deck}
-						/>
+						>
+							<Deck 
+								deck={decks[deck]}
+							/>
+						</TouchableOpacity>
 					)
 				})}
 			</ScrollView>

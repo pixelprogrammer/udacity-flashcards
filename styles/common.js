@@ -25,5 +25,10 @@ export default StyleSheet.create({
 		paddingVertical: 10,
 		paddingHorizontal: 20,
 		color: white,
+	},
+	title: {
+		fontWeight: "bold",
+		textAlign: "center",
+		fontSize: 24,
 	}
 })

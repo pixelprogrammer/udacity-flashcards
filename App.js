@@ -7,6 +7,7 @@ import { Constants } from 'expo'
 import reducer from './reducers'
 import {orange, white} from './utils/colors'
 import DeckList from './components/DeckList'
+import DeckDetails from './components/DeckDetails'
 import AddCard from './components/AddCard'
 import AddDeck from './components/AddDeck'
 
@@ -41,11 +42,11 @@ const Tabs = TabNavigator({
 			backgroundColor: Platform.OS === 'ios' ? white : orange,
 			shadowColor: 'rgba(0, 0, 0, 0.24)',
 			shadowOffset: {
-			width: 0,
-			height: 3
-		},
-		shadowRadius: 6,
-		shadowOpacity: 1
+				width: 0,
+				height: 3
+			},
+			shadowRadius: 6,
+			shadowOpacity: 1
 		}
 	}
 })
@@ -56,6 +57,9 @@ const MainNav = StackNavigator({
 	},
 	AddCard: {
 		screen: AddCard
+	},
+	DeckDetails: {
+		screen: DeckDetails
 	}
 
 })

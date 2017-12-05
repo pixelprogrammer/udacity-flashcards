@@ -27,28 +27,31 @@ class AddDeck extends Component {
 	submitDeck = () => {
 		const {text} = this.state
 		const {dispatch} = this.props
-		
-		const deck = getDeck(text)
-		
-		if( deck === false) {
-			const success = addDeck(text)
-			dispatch(addDeckAction(text))
+		const self = this
+		getDeck(text)
+			.then(deck => {
+				if( deck === false) {
+					addDeck(text)
+						.then(() => {
+							dispatch(addDeckAction(text))
+							self.props.navigation.navigate('DeckList')
+							self.resetText()
+						})
+						.catch(err => {
+							self.setState({
+								err
+							})
+						})
 
-			if( success ) {
-				this.props.navigation.navigate('DeckList')
-				return
-			}
+					return
+				}
 
-			this.setState({
-				err: "Could not save Deck"
+				self.setState({
+					err: "Deck Already exists",
+				})
+				
 			})
-
-			return
-		}
-
-		this.setState({
-			err: "Deck Already exists",
-		})
+		
 
 	}
 

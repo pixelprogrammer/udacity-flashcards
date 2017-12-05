@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {View, Text, StyleSheet} from 'react-native'
 import {white} from '../utils/colors'
+import commonStyles from '../styles/common'
 
 class Deck extends Component {
 	
@@ -11,8 +12,8 @@ class Deck extends Component {
 
 		return (
 			<View style={styles.card}>
-				<Text>{deck.title}</Text>
-				<Text>This deck has {deck.questions.length} {cardsText}</Text>
+				<Text style={commonStyles.title}>{deck.title}</Text>
+				<Text style={{textAlign: 'center'}}>This deck has {deck.questions.length} {cardsText}</Text>
 			</View>
 		)
 	}	
