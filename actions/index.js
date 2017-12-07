@@ -13,3 +13,11 @@ export function receiveDecksAction(decks) {
 		decks
 	}
 }
+
+export function addCardToDeckAction(deckId, card) {
+	return {
+		type: ADD_CARD,
+		deckId,
+		card,
+	}
+}

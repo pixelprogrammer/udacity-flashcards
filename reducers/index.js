@@ -12,6 +12,17 @@ function decks(state={}, action) {
 			}
 		case RECEIVE_DECKS:
 			return action.decks
+		case ADD_CARD:
+			return {
+				...state,
+				[action.deckId]: {
+					...state[action.deckId],
+					questions: [
+						...state[action.deckId].questions,
+						action.card,
+					]
+				}
+			}
 		default:
 			return state
 	}
