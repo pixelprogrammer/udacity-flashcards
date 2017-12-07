@@ -17,11 +17,9 @@ class DeckList extends Component {
 
 		const {dispatch} = this.props
 
-		console.log('getting decks');
 		getDecks()
 			.then(decks => {
 				dispatch(receiveDecksAction(decks))
-				console.log(decks)
 			})
 	}
 

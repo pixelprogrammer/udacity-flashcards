@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native'
-import {white, error} from '../utils/colors'
+import {white, error, success} from '../utils/colors'
 
 export default StyleSheet.create({
 	container: {
@@ -26,9 +26,34 @@ export default StyleSheet.create({
 		paddingHorizontal: 20,
 		color: white,
 	},
+	success: {
+		backgroundColor: success,
+		paddingVertical: 10,
+		paddingHorizontal: 20,
+		color: "#000000",
+	},
+	errBtn: {
+		backgroundColor: error,
+		paddingVertical: 10,
+		paddingHorizontal: 20,
+	},
+	successBtn: {
+		backgroundColor: success,
+		paddingVertical: 10,
+		paddingHorizontal: 20,
+	},
 	title: {
 		fontWeight: "bold",
 		textAlign: "center",
 		fontSize: 24,
+	},
+	card: {
+		backgroundColor: white,
+		borderColor: '#efefef',
+		borderWidth: 1,
+		marginHorizontal: 10,
+		marginVertical: 20,
+		padding: 20,
+
 	}
 })
