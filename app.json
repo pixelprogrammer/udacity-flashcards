@@ -1,5 +1,21 @@
 {
-  "expo": {
-    "sdkVersion": "22.0.0"
-  }
+	"expo": {
+		"sdkVersion": "22.0.0",
+		"orientation": "portrait",
+		"name": "Flash Cards",
+		"description": "Get your life together and start to study smarter with this app",
+		"slug": "pixelflashcards",
+		"version": "1.0",
+		"icon": "https://png.icons8.com/school/androidL/512/f39c12",
+		"notification": {
+			"icon": "https://png.icons8.com/school/androidL/45/f39c12"
+		},
+		"ios": {
+			"bundleIdentifier": "org.pixelflashcards.exp",
+		},
+		"android": {
+			"package": "org.pixelflashcards.exp",
+		}
+	}
+	}
 }
