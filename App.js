@@ -5,13 +5,14 @@ import { Provider } from 'react-redux'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import { Constants } from 'expo'
 import reducer from './reducers'
-import {orange, white} from './utils/colors'
+import {orange, lightOrange, white} from './utils/colors'
 import DeckList from './components/DeckList'
 import DeckDetails from './components/DeckDetails'
 import AddCard from './components/AddCard'
 import AddDeck from './components/AddDeck'
 import Quiz from './components/Quiz'
 import {setNotification} from './utils/helpers'
+import { Entypo } from '@expo/vector-icons'
 
 function FCStatusBar ({backgroundColor, ...props}) {
     return (
@@ -27,10 +28,14 @@ const Tabs = TabNavigator({
 		screen: DeckList,
 		navigationOptions: {
 			tabBarLabel: 'Deck List',
+			tabBarIcon: ({ tintColor }) => <Entypo name='list' size={30} color={tintColor} />
 		}
 	},
 	AddDeck: {
-		screen: AddDeck
+		screen: AddDeck,
+		navigationOptions: {
+			tabBarIcon: ({ tintColor }) => <Entypo name='add-to-list' size={30} color={tintColor} />
+		}
 	}
 	}, {
 		navigationOptions: {
@@ -38,6 +43,8 @@ const Tabs = TabNavigator({
 	},
 	tabBarOptions: {
 		activeTintColor: white,
+		inactiveTintColor: white,
+		activeBackgroundColor: lightOrange,
 		style: {
 			height: 56,
 			backgroundColor: orange,
