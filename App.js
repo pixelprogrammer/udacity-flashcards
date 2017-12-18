@@ -37,10 +37,10 @@ const Tabs = TabNavigator({
 		header: null
 	},
 	tabBarOptions: {
-		activeTintColor: Platform.OS === 'ios' ? orange : white,
+		activeTintColor: white,
 		style: {
 			height: 56,
-			backgroundColor: Platform.OS === 'ios' ? white : orange,
+			backgroundColor: orange,
 			shadowColor: 'rgba(0, 0, 0, 0.24)',
 			shadowOffset: {
 				width: 0,
