@@ -27,7 +27,6 @@ const Tabs = TabNavigator({
 		screen: DeckList,
 		navigationOptions: {
 			tabBarLabel: 'Deck List',
-			tabBarIcon: ({ tintColor }) => <FontAwesome name='ios-speedometer' size={30} color={tintColor} />
 		}
 	},
 	AddDeck: {
