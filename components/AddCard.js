@@ -5,6 +5,7 @@ import Button from './Button'
 import {addCardToDeck, getDeck} from '../utils/api'
 import {connect} from 'react-redux'
 import {addCardToDeckAction} from '../actions'
+import { NavigationActions } from 'react-navigation'
 
 class AddCard extends Component {
 	static navigationOptions = {
@@ -41,22 +42,19 @@ class AddCard extends Component {
 		const {dispatch} = this.props
 		const self = this
 
-		console.log("addCardHandler has been called....so why does it do nothing")
 
 		return function() {
 			const card = {question: questionText, answer: answerText}
 
-			console.log("about to add a card to the deck", card)
 			addCardToDeck(title, card)
 			.then(() => {
-				dispatch(addCardToDeckAction(title, card))
-				console.log("Added card to deck:", card)
 				return getDeck(title)
 			})
 			.then(deck => {
-				console.log("does this even run?", deck)
-				console.log("resetting the Add Card form fields")
-				self.props.navigation.navigate('DeckDetails', {deck})
+				console.log('Deck before dispatch', deck)
+				self.props.navigation.dispatch(NavigationActions.back({DeckDetails: {deck}}))
+				dispatch(addCardToDeckAction(title, card))
+
 				self.reset()
 			})
 			.catch((err) => {
@@ -76,22 +74,23 @@ class AddCard extends Component {
 		return (
 			<View style={commonStyles.container}>
 				<View>
-					<Text style={commonStyles.title}>This is the Add Card View</Text>
 					{ err
 						? <Text style={commonStyles.error}>{err}</Text>
 						: null
 					}
+					<Text style={commonStyles.title}>Question:</Text>
 					<TextInput
 						onChangeText={this.updateQuestionText}
 						value={question}
 						style={commonStyles.textField}
 					/>
+					<Text style={commonStyles.title}>Answer:</Text>
 					<TextInput
 						onChangeText={this.updateAnswerText}
 						value={answer}
 						style={commonStyles.textField}
 					/>
-					<Button onPress={this.addCardHandler(deckId)}>Add Card</Button>
+					<Button style={{marginTop: 20}}onPress={this.addCardHandler(deckId)}>Add Card</Button>
 				</View>
 			</View>
 		)

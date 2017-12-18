@@ -27,7 +27,8 @@ const styles = StyleSheet.create({
 		marginHorizontal: 10,
 		marginVertical: 20,
 		padding: 20,
-
+		alignSelf: 'stretch',
+		flex: 1,
 	}
 })
 export default Deck

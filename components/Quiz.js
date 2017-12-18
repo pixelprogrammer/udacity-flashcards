@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {View, Text, Animated, StyleSheet} from 'react-native'
 import commonStyles from '../styles/common'
 import Button from './Button'
+import {calculateScore, clearNotifications, setNotification} from '../utils/helpers'
 
 let frontInterpolate = null
 
@@ -22,10 +23,6 @@ class Quiz extends Component {
 		flipAnimatedValue: new Animated.Value(0),
 	}
 
-	componentDidMount = () => {
-		console.log('the component mounted...yipppeeeee')
-	}
-
 	componentWillMount = () => {
 		this.initializeQuiz()
 		
@@ -44,6 +41,9 @@ class Quiz extends Component {
 			this._flipValue = value
 		})
 		this.setState({
+			showAnswer: false,
+			currentIndex: 0,
+			score: 0,
 			questions: questions
 		})
 	}
@@ -54,7 +54,6 @@ class Quiz extends Component {
 
 	halfFlip = (callback) => {
 		const {flipAnimatedValue} = this.state 
-		console.log(this._flipValue)
 		if( this._flipValue >= 90) {
 			Animated.timing(flipAnimatedValue, {
 				toValue: 0,
@@ -112,34 +111,72 @@ class Quiz extends Component {
 		})
 
 	}
+
+	resetQuiz = () => {
+	    clearNotifications()
+	    	.then(setNotification)
+
+		this.setState({
+			showAnswer: false,
+			currentIndex: 0,
+			score: 0,
+		})
+	}
+
+	goToDeckView = () => {
+		this.props.navigation.goBack()
+		this.resetQuiz()
+	}
+
 	render() {
 
-		const {showAnswer, currentIndex, questions} = this.state
+		const {showAnswer, currentIndex, questions, score} = this.state
+
+		if( currentIndex >= questions.length ) {
+			return (
+				<View style={commonStyles.container}>
+					<Text style={commonStyles.title}>Quiz is done</Text>
+					<Text>Here is your score:</Text>
+					<Text style={[commonStyles.title, {fontSize: 56}]}>{calculateScore(score, questions.length)}%</Text>
+					<Button onPress={this.goToDeckView}>
+						<Text>Go Back to Deck View</Text>
+					</Button>
+					<Button onPress={this.resetQuiz}>
+						<Text>Restart Quiz</Text>
+					</Button>
+				</View>
+			)
+		}
 		const text = questions.length > 0 ? (showAnswer ? questions[currentIndex].answer : questions[currentIndex].question) : ""
 
 		const frontAnimStyle = this.getFrontAnimStyle()
-		
+
 		return (
-			<View style={commonStyles.container}>
-				<Text style={commonStyles.title}>{showAnswer ? "Answer:" : "Question:"}</Text>
-				
-				<Animated.View style={[commonStyles.card, frontAnimStyle, {alignSelf: "stretch"}]}>
-					<Text>{text}</Text>
-				</Animated.View>
-				{showAnswer ?
-					<View>
-						<Button style={commonStyles.successBtn} onPress={this.onCorrect}>
-							<Text style={{color: "#fff"}}>Correct</Text>
-						</Button>
-						<Button style={commonStyles.errBtn} onPress={this.onIncorrect}>
-							<Text style={{color: "#000"}}>Incorrect</Text>
-						</Button>
-					</View>
-				:
-					<View>
-						<Button onPress={this.revealAnswer}><Text>Show Answer</Text></Button>
-					</View>
-				}
+			<View style={{flex:1}}>
+				<View style={{padding: 20}}>
+					<Text>Card {currentIndex+1} of {questions.length}</Text>
+				</View>
+				<View style={commonStyles.container}>
+					<Text style={commonStyles.title}>{showAnswer ? "Answer:" : "Question:"}</Text>
+					
+					<Animated.View style={[commonStyles.card, frontAnimStyle, {alignSelf: "stretch"}]}>
+						<Text>{text}</Text>
+					</Animated.View>
+					{showAnswer ?
+						<View>
+							<Button style={commonStyles.successBtn} onPress={this.onCorrect}>
+								<Text style={{color: "#fff"}}>Correct</Text>
+							</Button>
+							<Button style={commonStyles.errBtn} onPress={this.onIncorrect}>
+								<Text style={{color: "#000"}}>Incorrect</Text>
+							</Button>
+						</View>
+					:
+						<View>
+							<Button onPress={this.revealAnswer}><Text>Show Answer</Text></Button>
+						</View>
+					}
+				</View>
 			</View>
 		)
 	}	

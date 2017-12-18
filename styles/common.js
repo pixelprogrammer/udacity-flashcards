@@ -9,8 +9,8 @@ export default StyleSheet.create({
 	},
 	row: {
 		flexDirection: 'row',
-		flex: 1,
 		alignItems: "center",
+		alignSelf: 'stretch',
 	},
 	textField: {
 		paddingVertical: 10,
@@ -18,7 +18,7 @@ export default StyleSheet.create({
 		backgroundColor: white,
 		borderColor: '#999999',
 		borderBottomWidth: 2,
-		maxWidth: 300,
+		width: 300,
 	},
 	error: {
 		backgroundColor: error,

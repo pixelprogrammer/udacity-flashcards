@@ -11,6 +11,7 @@ import DeckDetails from './components/DeckDetails'
 import AddCard from './components/AddCard'
 import AddDeck from './components/AddDeck'
 import Quiz from './components/Quiz'
+import {setNotification} from './utils/helpers'
 
 function FCStatusBar ({backgroundColor, ...props}) {
     return (
@@ -69,6 +70,10 @@ const MainNav = StackNavigator({
 })
 
 export default class App extends React.Component {
+
+	componentDidMount = () => {
+		setNotification()
+	}
     render() {
         return (
             <Provider store={createStore(reducer)}>

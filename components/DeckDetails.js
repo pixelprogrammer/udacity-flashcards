@@ -2,13 +2,15 @@ import React, {Component} from 'react'
 import {View, Text} from 'react-native'
 import Deck from './Deck'
 import Button from './Button'
+import commonStyles from '../styles/common'
+import {connect} from 'react-redux'
 
 class DeckDetails extends Component {
 	static navigationOptions = ({navigation}) => {
-		const {deck} = navigation.state.params
+		const {key} = navigation.state.params
 
 		return {
-			title: deck.title
+			title: key
 		}
 	}
 
@@ -30,25 +32,32 @@ class DeckDetails extends Component {
 
 	render() {
 
-		const {navigation} = this.props
-		const {deck} = navigation.state.params
+		const {navigation, decks} = this.props
+		const {key} = navigation.state.params
+		const deck = decks[key]
 
 		return (
-			<View>
-				<View>
+			<View style={commonStyles.container}>
+				<View style={commonStyles.row}>
 					<Deck deck={deck} />
 				</View>
-				<View>
-					<Button onPress={this.addQuestionHandler(deck)}>
-						<Text>Add Question</Text>
-					</Button>
+				<Button onPress={this.addQuestionHandler(deck)}>
+					<Text>Add Card</Text>
+				</Button>
+				{deck.questions.length > 0 ?
 					<Button onPress={this.startQuizHandler(deck)}>
 						<Text>Start Quiz</Text>
 					</Button>
-				</View>
+					: null
+				}
 			</View>
 		)
 	}	
 }
 
-export default DeckDetails
+function mapStateToProps(decks) {
+	return {
+		decks,
+	}
+}
+export default connect(mapStateToProps)(DeckDetails)
