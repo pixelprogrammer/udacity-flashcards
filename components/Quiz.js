@@ -24,9 +24,9 @@ class Quiz extends Component {
 	}
 
 	componentWillMount = () => {
-		this.initializeQuiz()
-		
+		this.initializeQuiz()	
 	}
+	
 	componentWillUnmount = () => {
 		const {flipAnimatedValue} = this.state
 		flipAnimatedValue.removeAllListeners()

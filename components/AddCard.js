@@ -51,14 +51,12 @@ class AddCard extends Component {
 				return getDeck(title)
 			})
 			.then(deck => {
-				console.log('Deck before dispatch', deck)
 				self.props.navigation.dispatch(NavigationActions.back({DeckDetails: {deck}}))
 				dispatch(addCardToDeckAction(title, card))
 
 				self.reset()
 			})
 			.catch((err) => {
-				console.log(err)
 				self.setState({
 					err
 				})
