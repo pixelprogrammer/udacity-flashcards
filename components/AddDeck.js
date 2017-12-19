@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {View, Text, TextInput} from 'react-native'
+import {NavigationActions} from 'react-navigation'
 import commonStyles from '../styles/common'
 import Button from './Button'
 import {addDeck, getDeck} from '../utils/api'
@@ -34,7 +35,20 @@ class AddDeck extends Component {
 					addDeck(text)
 						.then(() => {
 							dispatch(addDeckAction(text))
-							self.props.navigation.navigate('DeckList')
+							// lets redo the stack navigation history
+							// We don't want the user to go back to the add new Deck view
+							// Just the deck list view which is the more natural view to go back to
+
+							const resetNav = NavigationActions.reset({
+								index: 1,
+								actions: [
+									NavigationActions.navigate({routeName: 'Home'}),
+									NavigationActions.navigate({routeName: 'DeckDetails', params: {
+										key: text
+									}})
+								]
+							})
+							self.props.navigation.dispatch(resetNav)
 							self.resetText()
 						})
 						.catch(err => {

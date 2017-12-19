@@ -27,6 +27,11 @@ class Quiz extends Component {
 		this.initializeQuiz()
 		
 	}
+	componentWillUnmount = () => {
+		const {flipAnimatedValue} = this.state
+		flipAnimatedValue.removeAllListeners()
+	} 
+
 	initializeQuiz = () => {
 		const {questions} = this.props.navigation.state.params.deck
 		const {flipAnimatedValue} = this.state
@@ -46,10 +51,6 @@ class Quiz extends Component {
 			score: 0,
 			questions: questions
 		})
-	}
-
-	nextCard = () => {
-
 	}
 
 	halfFlip = (callback) => {
